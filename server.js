@@ -30,7 +30,7 @@ app.use(
 connectToDb();
 
 app.get("/", (req, res) => {
-  res.send("Welcome to the Music API!");
+  res.send("Welcome to the Music APP! in AWS Cloud");
 });
 
 // Routing
