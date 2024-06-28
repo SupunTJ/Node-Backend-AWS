@@ -9,10 +9,13 @@ pipeline {
                 }
             }
         }
+
+        
+
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh 'docker build -t Supun3998/server-app-image .'
+                    sh 'docker build -t supun3998/server-app-image .'
                 }
             }
         }
@@ -22,13 +25,23 @@ pipeline {
                     // Stop any running containers with the same name
                     
                     // Run the new container
-                    sh 'docker run -d -p 3000:3000 Supun3998/server-app-image'
+                    sh 'docker run -d -p 3000:3000 supun3998/server-app-image'
                 }
             }
         }
         stage('Show Running Containers') {
             steps {
                 sh 'docker ps'
+            }
+        }
+
+        stage('Login to Docker Hub') {
+            steps {
+                withCredentials([string(credentialsId: 'dockerhubpwd', variable: 'Dockerhub')]) {
+                    script {
+                        sh "docker login -u supun3998 -p ${Dockerhub}"
+                    }
+                }
             }
         }
     }
